@@ -37,15 +37,27 @@ class UserController {
     }
   }
   async getUserList(ctx, next) {
+    const { offset = 0, size = 10 } = ctx.query
     try {
-      const res = await UserService.getUserList()
-      console.log(res)
+      const res = await UserService.getUserList(String(offset), String(size))
+      const { total } = await UserService.getUserTotal()
       ctx.body = {
-        data: res,
+        data: {
+          userList: res,
+          total
+        },
         code: 200
       }
     } catch (error) {
       HandelRes.error(ctx, '获取用户列表失败')
+    }
+  }
+  async queryUser(ctx, next) {
+    const { username } = ctx.params
+    const res = await UserService.queryUser(username)
+    ctx.body = {
+      data: res,
+      code: 200
     }
   }
 }

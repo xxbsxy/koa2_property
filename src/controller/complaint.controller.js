@@ -30,8 +30,9 @@ class ComplaintController {
     }
   }
   async getComplaintList(ctx, next) {
+    const { realname } = ctx.query
     try {
-      const res = await ComplaintService.getComplaintList()
+      const res = await ComplaintService.getComplaintList(realname)
       ctx.body = {
         data: res,
         code: 200
