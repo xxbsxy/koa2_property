@@ -30,9 +30,9 @@ class ComplaintController {
     }
   }
   async getComplaintList(ctx, next) {
-    const { realname } = ctx.query
+    const { realname, offset = 0, size = 10 } = ctx.query
     try {
-      const res = await ComplaintService.getComplaintList(realname)
+      const res = await ComplaintService.getComplaintList(realname, String(offset), String(size))
       ctx.body = {
         data: res,
         code: 200
@@ -43,8 +43,9 @@ class ComplaintController {
   }
   async getComplaintById(ctx, next) {
     const { id } = ctx.params
+    const { offset = 0, size = 10 } = ctx.query
     try {
-      const res = await ComplaintService.getComplaintById(id)
+      const res = await ComplaintService.getComplaintById(id, String(offset), String(size))
       ctx.body = {
         data: res,
         code: 200

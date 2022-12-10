@@ -3,7 +3,8 @@ const {
   getRepairList,
   addRepair,
   deleteRepair,
-  updateRepair
+  updateRepair,
+  getRepairById
 } = require('../controller/repair.controller')
 const router = new Router()
 
@@ -21,6 +22,6 @@ router.delete('/:id', deleteRepair)
 // 获取全部报修
 router.get('/', getRepairList)
 
-// // 获取单个用户投诉
-// router.get('/:id', getComplaintById)
+// 获取单个用户投诉
+router.get('/:id', getRepairById)
 module.exports = router

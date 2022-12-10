@@ -58,5 +58,25 @@ class RepairService {
     const sql = `update repair set content = ? , place = ? ,status = ? where id = ? `
     await connection.execute(sql, [content, place, status, id])
   }
+
+  // 获取用户的全部报修
+  async getRepairById(id, offset, size) {
+    const sql = `
+		select  repair.id, repair.content,repair.place, repair.status ,repair.createtime,
+		JSON_OBJECT('id',user.id,'username',user.username,'realname',user.realname,'phone',user.phone) user
+		from repair 
+		left join user on user_id = user.id where user.id = ?
+		limit ?,?
+		`
+
+    const sql1 = `
+		select count(*) total
+		from repair 
+		left join user on user_id = user.id where user.id = ?
+		`
+    const [res] = await connection.execute(sql, [id, offset, size])
+    const [res1] = await connection.execute(sql1, [id])
+    return { repairList: res, total: res1[0].total }
+  }
 }
 module.exports = new RepairService()

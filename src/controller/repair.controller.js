@@ -41,13 +41,28 @@ class ComplaintController {
   async updateRepair(ctx, next) {
     const { content, place, status } = ctx.request.body
     const { id } = ctx.params
-    console.log(content, place, status, id)
     try {
-      await RepairService.updateRepair(content, status, place, id)
+      await RepairService.updateRepair(content, place, status, id)
       HandelRes.success(ctx, '更新报修成功')
     } catch (error) {
       console.log(error)
       HandelRes.error(ctx, '更新报修失败')
+    }
+  }
+
+  // 获取用户的全部报修
+  async getRepairById(ctx, next) {
+    const { id } = ctx.params
+    const { offset = 0, size = 10 } = ctx.query
+    console.log(id)
+    try {
+      const res = await RepairService.getRepairById(id, String(offset), String(size))
+      ctx.body = {
+        data: res,
+        code: 200
+      }
+    } catch (error) {
+      HandelRes.error(ctx, '获取报修失败')
     }
   }
 }

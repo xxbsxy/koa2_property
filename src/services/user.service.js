@@ -30,24 +30,26 @@ class UserService {
   }
 
   // 获取用户列表
-  async getUserList(offset, size) {
-    const sql = `select * from user where role = '用户' limit ?,?`
-    const [res] = await connection.execute(sql, [offset, size])
-    console.log(offset, size)
-    return res
+  async getUserList(username, offset, size) {
+    if (username) {
+      const sql = `select * from user where role = '用户' and username like ? limit ?,?`
+      const sql1 = `select count(*) total from user where username like ?`
+      const [res] = await connection.execute(sql, [`%${username}%`, offset, size])
+      const [res1] = await connection.execute(sql1, [`%${username}%`])
+      return { userList: res, total: res1[0].total }
+    } else {
+      const sql = `select * from user where role = '用户'  limit ?,?`
+      const sql1 = `select count(*) total from user `
+      const [res] = await connection.execute(sql, [offset, size])
+      const [res1] = await connection.execute(sql1)
+      return { userList: res, total: res1[0].total }
+    }
   }
 
   // 根据id获取用户
   async getUserById(id) {
     const sql = `select * from user where id = ?`
     const [res] = await connection.execute(sql, [id])
-    return res[0]
-  }
-
-  // 获取用户总数
-  async getUserTotal() {
-    const sql = `select count(*) total from user`
-    const [res] = await connection.execute(sql)
     return res[0]
   }
 

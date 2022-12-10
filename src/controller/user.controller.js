@@ -37,15 +37,12 @@ class UserController {
     }
   }
   async getUserList(ctx, next) {
-    const { offset = 0, size = 10 } = ctx.query
+    const { username, offset = 0, size = 10 } = ctx.query
+    console.log(username)
     try {
-      const res = await UserService.getUserList(String(offset), String(size))
-      const { total } = await UserService.getUserTotal()
+      const res = await UserService.getUserList(username, String(offset), String(size))
       ctx.body = {
-        data: {
-          userList: res,
-          total
-        },
+        data: res,
         code: 200
       }
     } catch (error) {
