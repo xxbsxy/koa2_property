@@ -54,7 +54,6 @@ class ComplaintController {
   async getRepairById(ctx, next) {
     const { id } = ctx.params
     const { offset = 0, size = 10 } = ctx.query
-    console.log(id)
     try {
       const res = await RepairService.getRepairById(id, String(offset), String(size))
       ctx.body = {
