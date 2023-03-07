@@ -12,7 +12,6 @@ class HomeControler {
         code: 200
       }
     } catch (error) {
-      console.log(error)
       HandelRes.error(ctx, '获取房间列表失败')
     }
   }
