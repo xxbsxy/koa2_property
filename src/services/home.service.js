@@ -1,9 +1,9 @@
 const connection = require('../app/database')
 class HomeService {
   //添加一个房屋
-  async addHome(area, des, position) {
-    const sql = `insert into home (area, des, position) values (?,?,?) ;`
-    await connection.execute(sql, [area, des, position])
+  async addHome(area, des, position, type) {
+    const sql = `insert into home (area, des, position,type) values (?,?,?,?) ;`
+    await connection.execute(sql, [area, des, position, type])
   }
   // 删除一个房屋
   async deleteHome(id) {
@@ -12,9 +12,9 @@ class HomeService {
   }
 
   // 更新一个房屋
-  async updateHome(area, des, position, id) {
-    const sql = `update home set area = ? , des = ?, position = ? where id = ? ; `
-    await connection.execute(sql, [area, des, position, id])
+  async updateHome(area, des, position, type, id) {
+    const sql = `update home set area = ? , des = ?, position = ?,type = ? where id = ? ; `
+    await connection.execute(sql, [area, des, position, type, id])
   }
 
   // 获取单个用户的房屋

@@ -8,9 +8,9 @@ class ComplaintService {
   }
 
   // 更新投诉
-  async updateComplaint(content, status, remark, type, id) {
-    const sql = `update complaint set content = ? , status = ? ,remark =? , type = ? where id = ? ; `
-    await connection.execute(sql, [content, status, remark, type, id])
+  async updateComplaint(content, status, remark, type, handle_user, handle_phone, id) {
+    const sql = `update complaint set content = ? , status = ? ,remark =? , type = ?,handle_user = ?, handle_phone = ? where id = ? ; `
+    await connection.execute(sql, [content, status, remark, type, handle_user, handle_phone, id])
   }
 
   // 删除投诉
@@ -23,7 +23,7 @@ class ComplaintService {
   async getComplaintList(realname, offset, size) {
     if (realname) {
       const sql = `
-			select  complaint.id, complaint.content, complaint.type ,complaint.status,complaint.remark,complaint.createtime,
+			select  complaint.id, complaint.content, complaint.type ,complaint.status,complaint.remark,complaint.handle_user,complaint.handle_phone,complaint.createtime,
 			JSON_OBJECT('id',user.id,'username',user.username,'realname',user.realname,'phone',user.phone) user
 			from complaint 
 			left join user on user_id = user.id 
@@ -41,7 +41,7 @@ class ComplaintService {
       return { complaintList: res, total: res1[0].total }
     } else {
       const sql = `
-			select  complaint.id, complaint.content, complaint.type ,complaint.status,complaint.remark,complaint.createtime,
+			select  complaint.id, complaint.content, complaint.type ,complaint.status,complaint.remark,complaint.handle_user,complaint.handle_phone,complaint.createtime,
 			JSON_OBJECT('id',user.id,'username',user.username,'realname',user.realname,'phone',user.phone) user
 			from complaint 
 			left join user on user_id = user.id 
@@ -62,7 +62,7 @@ class ComplaintService {
   // 获取单个用户的投诉
   async getComplaintById(id, offset, size) {
     const sql = `
-		select  complaint.id, complaint.content, complaint.type ,complaint.status,complaint.remark,complaint.createtime,
+		select  complaint.id, complaint.content, complaint.type ,complaint.status,complaint.remark,complaint.handle_user,complaint.handle_phone,complaint.createtime,
     JSON_OBJECT('id',user.id,'username',user.username,'realname',user.realname,'phone',user.phone) user
     from complaint 
     left join user on user_id = user.id where user.id = ? 

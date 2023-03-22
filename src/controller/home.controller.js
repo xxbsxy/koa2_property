@@ -17,9 +17,9 @@ class HomeControler {
   }
   // 添加一个房子
   async addHome(ctx, next) {
-    const { area, des, position } = ctx.request.body
+    const { area, des, position, type } = ctx.request.body
     try {
-      await HomeService.addHome(area, des, position)
+      await HomeService.addHome(area, des, position, type)
       HandelRes.success(ctx, '添加房屋成功', 201)
     } catch (error) {
       HandelRes.error(ctx, '添加房屋失败')
@@ -37,10 +37,10 @@ class HomeControler {
   }
   // 更新一个房屋
   async updateHome(ctx, next) {
-    const { area, des, position } = ctx.request.body
+    const { area, des, position, type } = ctx.request.body
     const { id } = ctx.params
     try {
-      await HomeService.updateHome(area, des, position, id)
+      await HomeService.updateHome(area, des, position, type, id)
       HandelRes.success(ctx, '更新房屋成功')
     } catch (error) {
       HandelRes.error(ctx, '更新房屋失败')

@@ -39,10 +39,19 @@ class ComplaintController {
 
   // 更新报修
   async updateRepair(ctx, next) {
-    const { content, place, remark, type, status } = ctx.request.body
+    const { content, place, remark, type, status, handle_user, handle_phone } = ctx.request.body
     const { id } = ctx.params
     try {
-      await RepairService.updateRepair(content, place, status, remark, type, id)
+      await RepairService.updateRepair(
+        content,
+        place,
+        status,
+        remark,
+        type,
+        handle_user,
+        handle_phone,
+        id
+      )
       HandelRes.success(ctx, '更新报修成功')
     } catch (error) {
       console.log(error)

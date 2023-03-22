@@ -11,10 +11,18 @@ class ComplaintController {
     }
   }
   async updateComplaint(ctx, next) {
-    const { content, status, remark, type } = ctx.request.body
+    const { content, status, remark, type, handle_user, handle_phone } = ctx.request.body
     const { id } = ctx.params
     try {
-      await ComplaintService.updateComplaint(content, status, remark, type, id)
+      await ComplaintService.updateComplaint(
+        content,
+        status,
+        remark,
+        type,
+        handle_user,
+        handle_phone,
+        id
+      )
       HandelRes.success(ctx, '更新投诉成功')
     } catch (error) {
       HandelRes.error(ctx, '更新投诉失败')
