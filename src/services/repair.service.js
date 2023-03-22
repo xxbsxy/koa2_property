@@ -2,16 +2,16 @@ const connection = require('../app/database')
 
 class RepairService {
   // 添加报修
-  async addRepair(content, place, userId) {
-    const sql = `insert into repair (content,place,user_id) values (?,?, ?)`
-    await connection.execute(sql, [content, place, userId])
+  async addRepair(content, place, remark, type, userId) {
+    const sql = `insert into repair (content,place,remark,type,user_id) values (?,?,?,?,?)`
+    await connection.execute(sql, [content, place, remark, type, userId])
   }
 
   // 获取报修列表
   async getRepairList(realname, offset, size) {
     if (realname) {
       const sql = `
-			select  repair.id, repair.content,repair.place, repair.status ,repair.createtime,
+			select  repair.id, repair.content,repair.place, repair.status ,repair.type,repair.remark,repair.createtime,
 			JSON_OBJECT('id',user.id,'username',user.username,'realname',user.realname,'phone',user.phone) user
 			from repair 
 			left join user on user_id = user.id 
@@ -30,7 +30,7 @@ class RepairService {
       return { repairList: res, total: res1[0].total }
     } else {
       const sql = `
-			select  repair.id, repair.content,repair.place, repair.status ,repair.createtime,
+			select  repair.id, repair.content,repair.place, repair.status ,repair.type,repair.remark,repair.createtime,
 			JSON_OBJECT('id',user.id,'username',user.username,'realname',user.realname,'phone',user.phone) user
 			from repair 
 			left join user on user_id = user.id 
@@ -54,15 +54,15 @@ class RepairService {
   }
 
   // 更新报修
-  async updateRepair(content, place, status, id) {
-    const sql = `update repair set content = ? , place = ? ,status = ? where id = ? `
-    await connection.execute(sql, [content, place, status, id])
+  async updateRepair(content, place, status, remark, type, id) {
+    const sql = `update repair set content = ? , place = ? ,status = ?, remark = ?,type = ? where id = ? `
+    await connection.execute(sql, [content, place, status, remark, type, id])
   }
 
   // 获取用户的全部报修
   async getRepairById(id, offset, size) {
     const sql = `
-		select  repair.id, repair.content,repair.place, repair.status ,repair.createtime,
+		select  repair.id, repair.content,repair.place, repair.status ,repair.type,repair.remark,repair.createtime,
 		JSON_OBJECT('id',user.id,'username',user.username,'realname',user.realname,'phone',user.phone) user
 		from repair 
 		left join user on user_id = user.id where user.id = ?

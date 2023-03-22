@@ -16,12 +16,11 @@ class CarController {
   }
   // 添加车位
   async addCar(ctx) {
-    const { position, fees, area, remark } = ctx.request.body
+    const { position, fees, area, remark, car_num, status } = ctx.request.body
     try {
-      await CarService.addCar(position, Number(fees), area, remark)
+      await CarService.addCar(position, Number(fees), area, remark, car_num, status)
       HandelRes.success(ctx, '添加车位成功', 201)
     } catch (error) {
-      console.log(error)
       HandelRes.error(ctx, '添加车位失败')
     }
   }
@@ -36,13 +35,12 @@ class CarController {
     }
   }
   async updateCar(ctx) {
-    const { position, fees, area, remark } = ctx.request.body
+    const { position, fees, area, car_num, remark } = ctx.request.body
     const { id } = ctx.params
     try {
-      await CarService.updateCar(position, fees, area, remark, id)
+      await CarService.updateCar(position, fees, area, remark, car_num, id)
       HandelRes.success(ctx, '更新车位成功')
     } catch (error) {
-      console.log(error)
       HandelRes.error(ctx, '更新车位失败')
     }
   }

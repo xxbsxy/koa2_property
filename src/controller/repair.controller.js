@@ -3,9 +3,9 @@ const HandelRes = require('../utils/handle-result')
 class ComplaintController {
   // 添加报修
   async addRepair(ctx, next) {
-    const { content, place, userId } = ctx.request.body
+    const { content, place, remark, type, userId } = ctx.request.body
     try {
-      await RepairService.addRepair(content, place, userId)
+      await RepairService.addRepair(content, place, remark, type, userId)
       HandelRes.success(ctx, '添加报修成功', 201)
     } catch (error) {
       HandelRes.error(ctx, '添加报修失败')
@@ -39,10 +39,10 @@ class ComplaintController {
 
   // 更新报修
   async updateRepair(ctx, next) {
-    const { content, place, status } = ctx.request.body
+    const { content, place, remark, type, status } = ctx.request.body
     const { id } = ctx.params
     try {
-      await RepairService.updateRepair(content, place, status, id)
+      await RepairService.updateRepair(content, place, status, remark, type, id)
       HandelRes.success(ctx, '更新报修成功')
     } catch (error) {
       console.log(error)

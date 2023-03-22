@@ -20,7 +20,7 @@ class HomeService {
   // 获取单个用户的房屋
   async getHomeById(id, offset, size) {
     const sql = `
-		select  home.id, home.position,home.area, home.des ,home.createtime,home.updatetime,
+		select  home.id, home.position,home.area, home.des , home.type,home.createtime,home.updatetime,
 		JSON_OBJECT('id',user.id,'username',user.username,'realname',user.realname,'phone',user.phone) user
 		from home 
 		left join user on user_id = user.id where user.id = ?
@@ -40,7 +40,7 @@ class HomeService {
   async getHome(realname, offset, size) {
     if (realname) {
       const sql = `
-			select  home.id, home.position,home.area, home.des ,home.createtime,home.updatetime,
+			select  home.id, home.position,home.area, home.des , home.type,home.createtime,home.updatetime,
 			JSON_OBJECT('id',user.id,'username',user.username,'realname',user.realname,'phone',user.phone) user
 			from home 
 			left join user on user_id = user.id 
@@ -59,7 +59,7 @@ class HomeService {
       return { homeList: res, total: res1[0].total }
     } else {
       const sql = `
-			select  home.id, home.position,home.area, home.des ,home.createtime,home.updatetime,
+			select  home.id, home.position,home.area, home.des , home.type,home.createtime,home.updatetime,
 			JSON_OBJECT('id',user.id,'username',user.username,'realname',user.realname,'phone',user.phone) user
 			from home 
 			left join user on user_id = user.id 

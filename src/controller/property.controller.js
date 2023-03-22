@@ -26,6 +26,15 @@ class PropertyController {
       HandelRes.error(ctx, '更新物业信息失败')
     }
   }
+  async updatePropertyStatus(ctx) {
+    const { id } = ctx.params
+    try {
+      await PropertyService.updatePropertyStatus(id)
+      HandelRes.success(ctx, '缴费成功')
+    } catch (error) {
+      HandelRes.error(ctx, '缴费失败')
+    }
+  }
 }
 
 module.exports = new PropertyController()
