@@ -4,6 +4,12 @@ class DataService {
     // 用户数量
     const sql = `select count(*) user_num  from user ;`
     const [[{ user_num }]] = await connection.execute(sql)
+    // 房屋数量
+    const sql15 = `select count(*) home_num  from home ;`
+    const [[{ home_num }]] = await connection.execute(sql15)
+    // 房屋数量
+    const sql16 = `select count(*) car_num  from car ;`
+    const [[{ car_num }]] = await connection.execute(sql16)
     // 投诉
     const sql1 = `select count(*) complaint_num   from complaint;`
     const [[{ complaint_num }]] = await connection.execute(sql1)
@@ -38,6 +44,8 @@ class DataService {
     const [[{ property_suc_num }]] = await connection.execute(sql14)
     return {
       userList: { user_num },
+      homeList: { home_num },
+      carList: { car_num },
       complaintList: { complaint_num, complaint_not_num, complaint_go_num, complaint_suc_num },
       repairList: { repair_num, repair_not_num, repair_go_num, repair_suc_num },
       powerList: { power_num, power_not_num, power_suc_num },
